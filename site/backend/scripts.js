@@ -1,9 +1,9 @@
 let currentIndex = 0;
-const ul = document.querySelector(".listaFrutas");
-const prevBtn = document.getElementById("prev");
-const nextBtn = document.getElementById("next");
-const tooltip = document.getElementById("tooltip");
-const itensDaLista = document.querySelectorAll(".listaFrutas li");
+const ul = document.querySelector('.listaFrutas');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const tooltip = document.getElementById('tooltip');
+const itensDaLista = document.querySelectorAll('.listaFrutas li');
 const totalItems = ul.children.length;
 
 function updateSlider() {
@@ -11,75 +11,77 @@ function updateSlider() {
   ul.style.transform = `translateX(${translateX}px)`;
 }
 
-prevBtn.addEventListener("click", () => {
+prevBtn.addEventListener('click', () => {
   currentIndex = (currentIndex - 1 + totalItems) % totalItems;
   updateSlider();
-  tooltip.classList.add("show"); // Garante que ele continue aparecendo
+  tooltip.classList.add('show'); // Garante que ele continue aparecendo
 });
 
-nextBtn.addEventListener("click", () => {
+nextBtn.addEventListener('click', () => {
   currentIndex = (currentIndex + 1) % totalItems;
   updateSlider();
-  tooltip.classList.add("show"); // Garante que ele continue aparecendo
+  tooltip.classList.add('show'); // Garante que ele continue aparecendo
 });
 
 // 4. Lógica do Tooltip (Independente do Slider)
-const todasAsFrutas = document.querySelectorAll(".listaFrutas li");
+const todasAsFrutas = document.querySelectorAll('.listaFrutas li');
 
 todasAsFrutas.forEach((fruta) => {
-  fruta.addEventListener("mouseenter", () => {
-    const info = fruta.getAttribute("data-info");
-    const name = fruta.getAttribute("data-name");
-    const img = fruta.getAttribute("data-img");
-    const valor = fruta.getAttribute("data-valor");
-    const imgReeal = fruta.getAttribute("data-img-real");
-    const valorReal = fruta.getAttribute("data-valor-real");
+  fruta.addEventListener('mouseenter', () => {
+    const info = fruta.getAttribute('data-info');
+    const name = fruta.getAttribute('data-name');
+    const imgRobux = fruta.getAttribute('data-img-robux');
+    const valorRobux = fruta.getAttribute('data-robux');
+    const imgReal = fruta.getAttribute('data-img-real');
+    const valorReal = fruta.getAttribute('data-valor-real');
     tooltip.innerHTML = `
   <div class="tooltip-inner">
     <div class="tooltip-text">
-      <span class="tooltip-name">${name || ""}</span>
-      <div class="tooltip-desc">${info || ""}</div>
+      <span class="tooltip-name">${name || ''}</span>
+      <div class="tooltip-desc">${info || ''}</div>
     </div>
-    <div class="icon-wrap">
-      <img src="${img}" class="robuxicon" alt="icon">
-      <div class="valor">${valor}</div>
-    </div>
-    <div class="icon-wrap-real">
-      <img src="${img}" class="robuxicon" alt="icon">
-      <div class="valor">${valor}</div>
+    <div class="icon-container">
+      <div class="icon-wrap">
+        <img src="${imgRobux}" class="robuxicon" alt="icon">
+        <div class="valor">${valorRobux}</div>
+      </div>
+      <div class="icon-wrap-real">
+        <img src="${imgReal}" class="realicon" alt="icon">
+        <div class="valorReal">${valorReal}</div>
+      </div>
     </div>
   </div>
 `;
-    tooltip.classList.add("show");
+    tooltip.classList.add('show');
   });
 
-  fruta.addEventListener("mouseleave", () => {
-    tooltip.classList.remove("show");
+  fruta.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('show');
   });
 });
 
 // Inicializa
 updateSlider();
 
-const slider = document.getElementById("slider");
+const slider = document.getElementById('slider');
 
-slider.addEventListener("mouseenter", () => {
-  tooltip.classList.add("show");
+slider.addEventListener('mouseenter', () => {
+  tooltip.classList.add('show');
 });
 
-slider.addEventListener("mouseleave", () => {
-  tooltip.classList.remove("show");
+slider.addEventListener('mouseleave', () => {
+  tooltip.classList.remove('show');
 });
-ul.addEventListener("mouseleave", () => {
-  tooltip.classList.remove("show");
+ul.addEventListener('mouseleave', () => {
+  tooltip.classList.remove('show');
 });
 
 // Mobile
-ul.addEventListener("click", (e) => {
+ul.addEventListener('click', (e) => {
   e.stopPropagation();
-  tooltip.classList.toggle("show");
+  tooltip.classList.toggle('show');
 });
 
-document.addEventListener("click", () => {
-  tooltip.classList.remove("show");
+document.addEventListener('click', () => {
+  tooltip.classList.remove('show');
 });
