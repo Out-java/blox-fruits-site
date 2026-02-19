@@ -15,14 +15,12 @@ prevBtn.addEventListener("click", () => {
   currentIndex = (currentIndex - 1 + totalItems) % totalItems;
   updateSlider();
   tooltip.classList.add("show"); // Garante que ele continue aparecendo
-  e.stopPropagation();
 });
 
 nextBtn.addEventListener("click", () => {
   currentIndex = (currentIndex + 1) % totalItems;
   updateSlider();
   tooltip.classList.add("show"); // Garante que ele continue aparecendo
-  e.stopPropagation();
 });
 
 // 4. Lógica do Tooltip (Independente do Slider)
@@ -30,8 +28,10 @@ const todasAsFrutas = document.querySelectorAll(".listaFrutas li");
 
 todasAsFrutas.forEach((fruta) => {
   fruta.addEventListener("mouseenter", () => {
-    const info = fruta.getAttribute("data-info");
-    tooltip.textContent = info;
+    const info = fruta.getAttribute("data-name");
+    const img = fruta.getAttribute("data-img");
+    tooltip.innerHTML = `${info} <br>
+                          <img src="${img}"  class = "robuxicon">`;
     tooltip.classList.add("show");
   });
 
@@ -43,19 +43,6 @@ todasAsFrutas.forEach((fruta) => {
 // Inicializa
 updateSlider();
 
-itensDaLista.forEach((item) => {
-  item.addEventListener("mouseenter", () => {
-    // Pega o texto direto da 'li' que o mouse entrou
-    const texto = item.getAttribute("data-info");
-    tooltip.textContent = texto;
-    tooltip.classList.add("show");
-  });
-
-  item.addEventListener("mouseleave", () => {
-    tooltip.classList.remove("show");
-  });
-});
-// Desktop
 const slider = document.getElementById("slider");
 
 slider.addEventListener("mouseenter", () => {

@@ -139,7 +139,7 @@ button {
   width: 250px;
   max-height: 75px;
   text-align: center;
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
   transition: all 0.3s ease;
   color: white;
@@ -152,4 +152,12 @@ button {
 .tooltip.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+.robuxicon {
+  width: 70px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
