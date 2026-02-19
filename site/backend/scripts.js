@@ -14,16 +14,13 @@ function updateSlider() {
 prevBtn.addEventListener('click', () => {
   currentIndex = (currentIndex - 1 + totalItems) % totalItems;
   updateSlider();
-  tooltip.classList.add('show'); // Garante que ele continue aparecendo
 });
 
 nextBtn.addEventListener('click', () => {
   currentIndex = (currentIndex + 1) % totalItems;
   updateSlider();
-  tooltip.classList.add('show'); // Garante que ele continue aparecendo
 });
 
-// 4. Lógica do Tooltip (Independente do Slider)
 const todasAsFrutas = document.querySelectorAll('.listaFrutas li');
 
 todasAsFrutas.forEach((fruta) => {
@@ -35,23 +32,23 @@ todasAsFrutas.forEach((fruta) => {
     const imgReal = fruta.getAttribute('data-img-real');
     const valorReal = fruta.getAttribute('data-valor-real');
     tooltip.innerHTML = `
-  <div class="tooltip-inner">
-    <div class="tooltip-text">
-      <span class="tooltip-name">${name || ''}</span>
-      <div class="tooltip-desc">${info || ''}</div>
-    </div>
-    <div class="icon-container">
-      <div class="icon-wrap">
-        <img src="${imgRobux}" class="robuxicon" alt="icon">
-        <div class="valor">${valorRobux}</div>
+      <div class="tooltip-inner">
+        <div class="tooltip-text">
+          <span class="tooltip-name">${name || ''}</span>
+          <div class="tooltip-desc">${info || ''}</div>
+        </div>
+        <div class="icon-container">
+          <div class="icon-wrap">
+            <img src="${imgRobux}" class="robuxicon" alt="icon">
+            <div class="valor">${valorRobux}</div>
+          </div>
+          <div class="icon-wrap-real">
+            <img src="${imgReal}" class="realicon" alt="icon">
+            <div class="valorReal">${valorReal}</div>
+          </div>
+        </div>
       </div>
-      <div class="icon-wrap-real">
-        <img src="${imgReal}" class="realicon" alt="icon">
-        <div class="valorReal">${valorReal}</div>
-      </div>
-    </div>
-  </div>
-`;
+  `;
     tooltip.classList.add('show');
   });
 
@@ -60,28 +57,19 @@ todasAsFrutas.forEach((fruta) => {
   });
 });
 
+// Mobile (toque)
+fruta.addEventListener('click', (e) => {
+  e.stopPropagation(); // evita fechar imediatamente
+  tooltip.textContent = fruta.getAttribute('data-tooltip');
+  tooltip.style.display = 'block';
+  tooltip.style.left = e.pageX + 'px';
+  tooltip.style.top = e.pageY + 'px';
+});
+
+// Fechar tooltip ao tocar fora
+document.addEventListener('click', () => {
+  tooltip.style.display = 'none';
+});
+
 // Inicializa
 updateSlider();
-
-const slider = document.getElementById('slider');
-
-slider.addEventListener('mouseenter', () => {
-  tooltip.classList.add('show');
-});
-
-slider.addEventListener('mouseleave', () => {
-  tooltip.classList.remove('show');
-});
-ul.addEventListener('mouseleave', () => {
-  tooltip.classList.remove('show');
-});
-
-// Mobile
-ul.addEventListener('click', (e) => {
-  e.stopPropagation();
-  tooltip.classList.toggle('show');
-});
-
-document.addEventListener('click', () => {
-  tooltip.classList.remove('show');
-});
