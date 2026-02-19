@@ -28,10 +28,22 @@ const todasAsFrutas = document.querySelectorAll(".listaFrutas li");
 
 todasAsFrutas.forEach((fruta) => {
   fruta.addEventListener("mouseenter", () => {
-    const info = fruta.getAttribute("data-name");
+    const info = fruta.getAttribute("data-info");
+    const name = fruta.getAttribute("data-name");
     const img = fruta.getAttribute("data-img");
-    tooltip.innerHTML = `${info} <br>
-                          <img src="${img}"  class = "robuxicon">`;
+    const valor = fruta.getAttribute("data-valor");
+    tooltip.innerHTML = `
+  <div class="tooltip-inner">
+    <div class="tooltip-text">
+      <span class="tooltip-name">${name || ""}</span>
+      <div class="tooltip-desc">${info || ""}</div>
+    </div>
+    <div class="icon-wrap">
+      <img src="${img}" class="robuxicon" alt="icon">
+      <div class="valor">${valor}</div>
+    </div>
+  </div>
+`;
     tooltip.classList.add("show");
   });
 
