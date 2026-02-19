@@ -32,6 +32,8 @@ todasAsFrutas.forEach((fruta) => {
     const name = fruta.getAttribute("data-name");
     const img = fruta.getAttribute("data-img");
     const valor = fruta.getAttribute("data-valor");
+    const imgReeal = fruta.getAttribute("data-img-real");
+    const valorReal = fruta.getAttribute("data-valor-real");
     tooltip.innerHTML = `
   <div class="tooltip-inner">
     <div class="tooltip-text">
@@ -39,6 +41,10 @@ todasAsFrutas.forEach((fruta) => {
       <div class="tooltip-desc">${info || ""}</div>
     </div>
     <div class="icon-wrap">
+      <img src="${img}" class="robuxicon" alt="icon">
+      <div class="valor">${valor}</div>
+    </div>
+    <div class="icon-wrap-real">
       <img src="${img}" class="robuxicon" alt="icon">
       <div class="valor">${valor}</div>
     </div>
