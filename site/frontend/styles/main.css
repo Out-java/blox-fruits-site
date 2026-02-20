@@ -92,7 +92,8 @@ li {
   margin-left: 20px;
 }
 
-img {
+img,
+.imgFruta {
   max-width: 300px;
   max-height: 300px;
 }
@@ -104,6 +105,7 @@ img {
   width: calc(310px * 38);
   transition: transform 0.5s ease;
   list-style: none;
+  background-color: transparent;
 }
 
 .listaFrutas img:hover {
@@ -127,7 +129,7 @@ button {
 }
 
 #prev {
-  left: 10px;
+  left: 30px;
 }
 
 #next {
@@ -145,10 +147,10 @@ button {
 
 .tooltip {
   position: absolute;
-  left: 50%;
   transform: translateX(-50%) translateY(10px);
   background: #111;
-  padding: 10px 14px;
+  left: 50%;
+  padding: 10px 30px;
   border-radius: 8px;
   font-size: 14px;
   width: 250px;
@@ -170,6 +172,7 @@ button {
 .tooltip.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+  background-color: black;
 }
 
 .robuxicon {
@@ -256,34 +259,82 @@ button {
 }
 
 .pix-modal {
+  display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
   justify-content: center;
   align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
   z-index: 999;
 }
 
 .pix-modal.show {
-  opacity: 1;
-  pointer-events: all;
+  display: flex;
 }
 
-.pix-box {
+.pix-content {
   background: #111;
-  padding: 20px;
-  border-radius: 12px;
-  width: 300px;
+  padding: 30px;
+  width: 400px;
+  border-radius: 15px;
   text-align: center;
   color: white;
+  animation: fadeIn 0.3s ease;
 }
 
-.pix-box input {
-  width: 100%;
-  padding: 8px;
+.pix-content h2 {
+  margin-bottom: 15px;
+}
+
+.valorPix {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+#pixCodigo {
+  width: 90%;
+  height: 90px;
   margin: 10px 0;
+  padding: 10px;
+  resize: none;
+  border-radius: 8px;
+  border: none;
+  font-size: 12px;
+}
+
+#copiarPix {
+  top: 30rem;
+  width: 71%;
+  height: 12%;
+  padding: 20px;
+  background: #00c853;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#copiarPix:hover {
+  background: #00a844;
+}
+
+.fechar {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

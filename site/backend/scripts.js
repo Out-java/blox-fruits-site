@@ -4,6 +4,12 @@ const totalItems = ul.children.length;
 const nextBtn = document.getElementById("next"); //BOTÃO ANTERIOR
 const prevBtn = document.getElementById("prev"); //BOTÃO PRÓXIMO
 const tooltip = document.getElementById("tooltip"); //TOOLTIP
+//Area pix
+const pixModal = document.getElementById("pixModal");
+const pixValor = document.getElementById("pixValor");
+const pixCodigo = document.getElementById("pixCodigo");
+const copiarPix = document.getElementById("copiarPix");
+const fecharPix = document.getElementById("fecharPix");
 
 function updateSlider() {
   const translateX = -currentIndex * 310; // 300px width + 10px gap
@@ -48,39 +54,52 @@ todasAsFrutas.forEach((fruta) => {
   `;
     tooltip.classList.add("show");
   });
-
   fruta.addEventListener("mouseleave", () => {
-    tooltip.classList.remove("show");
+    setTimeout(() => {
+      if (!tooltip.matches(":hover")) {
+        tooltip.classList.remove("show");
+      }
+    }, 50);
   });
 });
 
-const pixModal = document.getElementById("pixModal");
-const pixValor = document.getElementById("pixValor");
-const pixCodigo = document.getElementById("pixCodigo");
-const copiarPix = document.getElementById("copiarPix");
-const fecharPix = document.getElementById("fecharPix");
-
-document.addEventListener("click", (e) => {
+// ABRIR PIX ao clicar no botão dentro do tooltip
+document.addEventListener("click", function (e) {
   if (e.target.classList.contains("pix-btn")) {
     const valor = e.target.dataset.valor;
 
-    pixValor.innerText = `Valor: R$ ${valor}`;
+    pixValor.textContent = `R$ ${valor}`;
 
-    // Exemplo de código PIX (substitua pelo seu real)
-    pixCodigo.value = `00020126360014BR.GOV.BCB.PIX0111SEU-PIX-AQUI5204000053039865405${valor}5802BR`;
+    // 🔥 AQUI VOCÊ COLOCA SUA CHAVE PIX
+    const chavePix = "seu-email@pix.com";
 
+    const codigo = `
+00020126580014BR.GOV.BCB.PIX0136${chavePix}
+52040000530398654${valor.replace(",", "")}
+5802BR5920Sua Empresa6009SaoPaulo62070503***6304ABCD
+    `;
+
+    pixCodigo.value = codigo.trim();
     pixModal.classList.add("show");
   }
 });
 
-// Fechar modal
+// COPIAR
+copiarPix.addEventListener("click", () => {
+  pixCodigo.select();
+  document.execCommand("copy");
+  copiarPix.textContent = "Copiado!";
+  setTimeout(() => (copiarPix.textContent = "Copiar código PIX"), 2000);
+});
+
+// FECHAR
 fecharPix.addEventListener("click", () => {
   pixModal.classList.remove("show");
 });
 
-// Copiar código
-copiarPix.addEventListener("click", () => {
-  navigator.clipboard.writeText(pixCodigo.value);
-  copiarPix.innerText = "Copiado!";
-  setTimeout(() => (copiarPix.innerText = "Copiar código"), 1500);
+// FECHAR clicando fora
+pixModal.addEventListener("click", (e) => {
+  if (e.target === pixModal) {
+    pixModal.classList.remove("show");
+  }
 });
