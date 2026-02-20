@@ -1,75 +1,86 @@
 let currentIndex = 0;
-const ul = document.querySelector('.listaFrutas');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-const tooltip = document.getElementById('tooltip');
-const itensDaLista = document.querySelectorAll('.listaFrutas li');
+const ul = document.querySelector(".listaFrutas"); //PEGA OS LI
 const totalItems = ul.children.length;
+const nextBtn = document.getElementById("next"); //BOTÃO ANTERIOR
+const prevBtn = document.getElementById("prev"); //BOTÃO PRÓXIMO
+const tooltip = document.getElementById("tooltip"); //TOOLTIP
 
 function updateSlider() {
   const translateX = -currentIndex * 310; // 300px width + 10px gap
   ul.style.transform = `translateX(${translateX}px)`;
 }
 
-prevBtn.addEventListener('click', () => {
+prevBtn.addEventListener("click", () => {
   currentIndex = (currentIndex - 1 + totalItems) % totalItems;
   updateSlider();
 });
 
-nextBtn.addEventListener('click', () => {
+nextBtn.addEventListener("click", () => {
   currentIndex = (currentIndex + 1) % totalItems;
   updateSlider();
 });
 
-const todasAsFrutas = document.querySelectorAll('.listaFrutas li');
+const todasAsFrutas = document.querySelectorAll(".listaFrutas li");
+let abertoPorClick = false;
 
 todasAsFrutas.forEach((fruta) => {
-  fruta.addEventListener('mouseenter', () => {
-    const info = fruta.getAttribute('data-info');
-    const name = fruta.getAttribute('data-name');
-    const imgRobux = fruta.getAttribute('data-img-robux');
-    const valorRobux = fruta.getAttribute('data-robux');
-    const imgReal = fruta.getAttribute('data-img-real');
-    const valorReal = fruta.getAttribute('data-valor-real');
+  fruta.addEventListener("mouseenter", (e) => {
+    const dados = fruta.dataset;
+
     tooltip.innerHTML = `
       <div class="tooltip-inner">
         <div class="tooltip-text">
-          <span class="tooltip-name">${name || ''}</span>
-          <div class="tooltip-desc">${info || ''}</div>
+          <span class="tooltip-name">${dados.name || ""}</span>
+          <div class="tooltip-desc">${dados.info || ""}</div>
         </div>
         <div class="icon-container">
           <div class="icon-wrap">
-            <img src="${imgRobux}" class="robuxicon" alt="icon">
-            <div class="valor">${valorRobux}</div>
+            <img src="${dados.imgRobux}" class="robuxicon" alt="icon">
+            <div class="valor">${dados.robux}</div>
           </div>
           <div class="icon-wrap-real">
-            <img src="${imgReal}" class="realicon" alt="icon">
-            <div class="valorReal">${valorReal}</div>
+            <img src="${dados.imgReal}" class="realicon" alt="icon">
+            <div class="valorReal pix-btn" data-valor="${dados.valorReal}">R$ ${dados.valorReal}
+            </div>
           </div>
         </div>
       </div>
   `;
-    tooltip.classList.add('show');
+    tooltip.classList.add("show");
   });
 
-  fruta.addEventListener('mouseleave', () => {
-    tooltip.classList.remove('show');
+  fruta.addEventListener("mouseleave", () => {
+    tooltip.classList.remove("show");
   });
 });
 
-// Mobile (toque)
-fruta.addEventListener('click', (e) => {
-  e.stopPropagation(); // evita fechar imediatamente
-  tooltip.textContent = fruta.getAttribute('data-tooltip');
-  tooltip.style.display = 'block';
-  tooltip.style.left = e.pageX + 'px';
-  tooltip.style.top = e.pageY + 'px';
+const pixModal = document.getElementById("pixModal");
+const pixValor = document.getElementById("pixValor");
+const pixCodigo = document.getElementById("pixCodigo");
+const copiarPix = document.getElementById("copiarPix");
+const fecharPix = document.getElementById("fecharPix");
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("pix-btn")) {
+    const valor = e.target.dataset.valor;
+
+    pixValor.innerText = `Valor: R$ ${valor}`;
+
+    // Exemplo de código PIX (substitua pelo seu real)
+    pixCodigo.value = `00020126360014BR.GOV.BCB.PIX0111SEU-PIX-AQUI5204000053039865405${valor}5802BR`;
+
+    pixModal.classList.add("show");
+  }
 });
 
-// Fechar tooltip ao tocar fora
-document.addEventListener('click', () => {
-  tooltip.style.display = 'none';
+// Fechar modal
+fecharPix.addEventListener("click", () => {
+  pixModal.classList.remove("show");
 });
 
-// Inicializa
-updateSlider();
+// Copiar código
+copiarPix.addEventListener("click", () => {
+  navigator.clipboard.writeText(pixCodigo.value);
+  copiarPix.innerText = "Copiado!";
+  setTimeout(() => (copiarPix.innerText = "Copiar código"), 1500);
+});
