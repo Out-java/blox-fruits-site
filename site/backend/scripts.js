@@ -4,7 +4,7 @@ const totalItems = ul.children.length;
 const nextBtn = document.getElementById("next"); //BOTÃO ANTERIOR
 const prevBtn = document.getElementById("prev"); //BOTÃO PRÓXIMO
 const tooltip = document.getElementById("tooltip"); //TOOLTIP
-//Area pix
+//Area pix (desativado)
 const pixModal = document.getElementById("pixModal");
 const pixValor = document.getElementById("pixValor");
 const pixCodigo = document.getElementById("pixCodigo");
