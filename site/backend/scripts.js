@@ -71,12 +71,12 @@ document.addEventListener("click", function (e) {
     pixValor.textContent = `R$ ${valor}`;
 
     // 🔥 AQUI VOCÊ COLOCA SUA CHAVE PIX
-    const chavePix = "38998277582";
+    const chavePix = "gabrielbue2008@gmail.com";
 
     const codigo = `
-00020126580014BR.GOV.BCB.PIX0136${chavePix}
+00020126580014BR.GOV.BCB.PIX0124${chavePix}
 52040000530398654${valor.replace(",", "")}
-5802BR5920Crash Store6009SaoPaulo62070503***6304ABCD
+5802BR5920GABRIEL A L BATISTA6009BUENOPOLIS62070503***6304ABCD
     `;
 
     pixCodigo.value = codigo.trim();
